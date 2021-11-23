@@ -18,3 +18,10 @@ it("should render singup form", () => {
   expect(submitButton).not.toBeNull();
   expect(navToSignupButton).not.toBeNull();
 });
+
+// it("should show form validation error", () => {
+//   const { getByTestId, getByText } = render(<LoginScreen />);
+//   const textInputUser = getByTestId("username");
+//   const textInputPassword = getByTestId("password");
+
+// });
