@@ -21,7 +21,7 @@ it("should render singup form", () => {
   expect(navToLoginButton).not.toBeNull();
 });
 
-it("should show form validation error", async () => {
+it("should show signup form validation error", async () => {
   const { getByTestId, queryByText } = render(<SignupScreen />);
   const textInputUser = getByTestId("username");
   const textInputPassword = getByTestId("password");
@@ -59,18 +59,18 @@ it("should show form validation error", async () => {
   expect(errorMsgforSixDigitPassword.props.children).toBeTruthy();
 });
 
-it("should submit form succesfully", async () => {
-  const mockOnSubmit = jest.fn();
-  const { getByTestId } = render(<SignupScreen onSubmit={mockOnSubmit} />);
-  const textInputUser = getByTestId("username");
-  const textInputPassword = getByTestId("password");
-  const submitButton = getByTestId(/submit/i);
+// it("should submit form succesfully", async () => {
+//   const mockOnSubmit = jest.fn();
+//   const { getByTestId } = render(<SignupScreen onSubmit={mockOnSubmit} />);
+//   const textInputUser = getByTestId("username");
+//   const textInputPassword = getByTestId("password");
+//   const submitButton = getByTestId(/submit/i);
 
-  await act(async () => {
-    fireEvent.changeText(textInputUser, "Hemanshu");
-    fireEvent.changeText(textInputPassword, "abcd1234");
-    fireEvent.press(submitButton);
-  });
+//   await act(async () => {
+//     fireEvent.changeText(textInputUser, "Hemanshu");
+//     fireEvent.changeText(textInputPassword, "abcd1234");
+//     fireEvent.press(submitButton);
+//   });
 
-  expect(mockOnSubmit).toHaveBeenCalled();
-});
+//   expect(mockOnSubmit).toHaveBeenCalled();
+// });

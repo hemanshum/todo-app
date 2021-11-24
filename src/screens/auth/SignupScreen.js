@@ -7,17 +7,22 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { signupUser } from "../../store/actions/authActions";
+import { clearSignupError } from "../../store/slices/authSlice";
 
 const schema = yup.object({
   username: yup.string().required(),
   password: yup.string().min(6).required(),
 });
 
-const SignupScreen = ({ onSubmit, navigation }) => {
+const SignupScreen = ({
+  onSubmit = (data) => console.log(data),
+  navigation,
+}) => {
   const dispatch = useDispatch();
   const { isLoading, signUpError } = useSelector((state) => state.auth);
 
   const {
+    reset,
     control,
     handleSubmit,
     formState: { errors },
@@ -29,7 +34,11 @@ const SignupScreen = ({ onSubmit, navigation }) => {
     resolver: yupResolver(schema),
   });
 
-  const onUserSubmit = (data) => dispatch(signupUser(data));
+  const onUserSubmit = (data) => {
+    dispatch(signupUser(data));
+    onSubmit(data);
+    reset();
+  };
 
   return (
     <View style={styles.container}>
@@ -47,7 +56,10 @@ const SignupScreen = ({ onSubmit, navigation }) => {
               error={errors.username}
               onBlur={onBlur}
               value={value}
-              onChangeText={onChange}
+              onChangeText={(data) => {
+                onChange(data);
+                dispatch(clearSignupError());
+              }}
               testID="username"
             />
           )}

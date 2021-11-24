@@ -1,6 +1,8 @@
 import * as React from "react";
+import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { render, fireEvent } from "@testing-library/react-native";
+import store from "../src/store";
 
 import AppNavigator from "../src/navigation/AppNavigation";
 
@@ -9,9 +11,11 @@ jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper");
 describe("Testing react navigation", () => {
   test("page contains the header Signup Now", async () => {
     const component = (
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </Provider>
     );
 
     const { findByText } = render(component);
@@ -23,9 +27,11 @@ describe("Testing react navigation", () => {
 
   test("clicking on navigate to login screen to switch screen", async () => {
     const component = (
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </Provider>
     );
 
     const { findByText, getByText } = render(component);

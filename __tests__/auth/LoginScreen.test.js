@@ -1,12 +1,15 @@
 import React from "react";
+
 import { render, fireEvent, act } from "../../src/test-utils";
 
 jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper");
 
 import LoginScreen from "../../src/screens/auth/LoginScreen";
 
-it("should render singup form", () => {
-  const { getByTestId, getByText } = render(<LoginScreen />);
+it("should render login form", () => {
+  const { getByTestId, getByText } = render(
+    <LoginScreen route={{ params: { signupStatus: null } }} />
+  );
 
   const screenTitle = getByText(/Login Now!/i);
   const textInputUser = getByTestId(/username/i);
@@ -21,8 +24,10 @@ it("should render singup form", () => {
   expect(navToSignupButton).not.toBeNull();
 });
 
-it("should show form validation error", async () => {
-  const { getByTestId, queryByText } = render(<LoginScreen />);
+it("should show form login validation error", async () => {
+  const { getByTestId, queryByText } = render(
+    <LoginScreen route={{ params: { signupStatus: null } }} />
+  );
   const textInputUser = getByTestId("username");
   const textInputPassword = getByTestId("password");
   const submitButton = getByTestId(/submit/i);
@@ -59,9 +64,14 @@ it("should show form validation error", async () => {
   expect(errorMsgforSixDigitPassword.props.children).toBeTruthy();
 });
 
-it("should submit form succesfully", async () => {
+it("should submit login form succesfully", async () => {
   const mockOnSubmit = jest.fn();
-  const { getByTestId } = render(<LoginScreen onSubmit={mockOnSubmit} />);
+  const { getByTestId } = render(
+    <LoginScreen
+      onSubmit={mockOnSubmit}
+      route={{ params: { signupStatus: null } }}
+    />
+  );
   const textInputUser = getByTestId("username");
   const textInputPassword = getByTestId("password");
   const submitButton = getByTestId(/submit/i);

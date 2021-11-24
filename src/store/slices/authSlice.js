@@ -14,8 +14,11 @@ const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
-    errorSigningUp: (state, action) => {
+    errorSigningUp: (state) => {
       state.signUpError = "User already registred!";
+    },
+    clearSignupError: (state, action) => {
+      state.signUpError = null;
     },
     startLoading: (state) => {
       state.isLoading = true;
@@ -27,7 +30,12 @@ const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { signupSuccess, errorSigningUp, startLoading, stopLoading } =
-  authSlice.actions;
+export const {
+  signupSuccess,
+  errorSigningUp,
+  clearSignupError,
+  startLoading,
+  stopLoading,
+} = authSlice.actions;
 
 export default authSlice.reducer;

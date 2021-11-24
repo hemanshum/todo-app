@@ -29,11 +29,14 @@ const LoginScreen = ({
     resolver: yupResolver(schema),
   });
 
-  const onUserSubmit = (data) => console.log(data);
+  const onUserSubmit = (data) => {
+    console.log(data);
+    onSubmit(data);
+  };
 
   return (
     <View style={styles.container}>
-      {signupStatus && <Caption>Signup Successful</Caption>}
+      {signupStatus && <Caption>Signup Successful,</Caption>}
       <Title>Login Now!</Title>
       <View style={styles.formContainer}>
         <Controller
@@ -86,10 +89,7 @@ const LoginScreen = ({
           mode="contained"
           style={styles.btnSpace}
           contentStyle={styles.btnStyle}
-          onPress={() => {
-            handleSubmit(onUserSubmit);
-            handleSubmit(onSubmit);
-          }}
+          onPress={handleSubmit(onUserSubmit)}
           testID="submit"
         >
           Login
