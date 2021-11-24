@@ -1,9 +1,12 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { TextInput, Button, Title, Caption, Text } from "react-native-paper";
+import { TextInput, Button, Title, Caption } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
 
-const LoginScreen = (props) => {
+const LoginScreen = ({
+  onSubmit = (data) => console.log(data),
+  navigation,
+}) => {
   const {
     control,
     handleSubmit,
@@ -15,7 +18,7 @@ const LoginScreen = (props) => {
     },
   });
 
-  const onSubmit = (data) => console.log(data);
+  // const onSubmit = (data) => console.log(data)
 
   return (
     <View style={styles.container}>
@@ -84,7 +87,7 @@ const LoginScreen = (props) => {
           mode="text"
           style={styles.btnSpace}
           contentStyle={styles.btnStyle}
-          onPress={() => props.navigation.navigate("Signup")}
+          onPress={() => navigation.navigate("Signup")}
           testID="navigateToSignup"
         >
           New user? Signup.
