@@ -25,7 +25,7 @@ describe("Testing react navigation", () => {
     await expect(signupTitle).toBeTruthy();
   });
 
-  test("clicking on navigate to login screen to switch screen", async () => {
+  test("navigate between signup and login screens", async () => {
     const component = (
       <Provider store={store}>
         <NavigationContainer>
@@ -35,14 +35,16 @@ describe("Testing react navigation", () => {
     );
 
     const { findByText, getByText } = render(component);
-    const clickToLoginScreen = await findByText("Already Registred? Login.");
+    const switchToLoginScreenButton = await findByText(
+      "Already Registred? Login."
+    );
 
-    fireEvent(clickToLoginScreen, "press");
+    fireEvent(switchToLoginScreenButton, "press");
     const loginScreen = getByText("Login Now!");
     expect(loginScreen).toBeTruthy();
 
-    const clickToSignupScreen = getByText("New user? Signup.");
-    fireEvent(clickToSignupScreen, "press");
+    const switchToSignupScreenButton = getByText("New user? Signup.");
+    fireEvent(switchToSignupScreenButton, "press");
     const signupScreen = getByText("Signup Now!");
     expect(signupScreen.props.children).toBe("Signup Now!");
   });
