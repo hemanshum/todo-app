@@ -1,9 +1,9 @@
 import React from "react";
 import { render, fireEvent, act } from "../../src/test-utils";
 
-import LoginScreen from "../../src/screens/auth/LoginScreen";
-
 jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper");
+
+import LoginScreen from "../../src/screens/auth/LoginScreen";
 
 it("should render singup form", () => {
   const { getByTestId, getByText } = render(<LoginScreen />);
@@ -33,7 +33,7 @@ it("should show form validation error", async () => {
     fireEvent.press(submitButton);
   });
 
-  const errorMsgforUsername = queryByText("This field is required");
+  const errorMsgforUsername = queryByText("username is a required field");
   expect(errorMsgforUsername.props.children).toBeTruthy();
 
   await act(async () => {
@@ -42,7 +42,9 @@ it("should show form validation error", async () => {
     fireEvent.press(submitButton);
   });
 
-  const errorMsgforPassword = queryByText("This field is required");
+  const errorMsgforPassword = queryByText(
+    "password must be at least 6 characters"
+  );
   expect(errorMsgforPassword.props.children).toBeTruthy();
 
   await act(async () => {
@@ -52,7 +54,7 @@ it("should show form validation error", async () => {
   });
 
   const errorMsgforSixDigitPassword = queryByText(
-    "require minimum character 6"
+    "password must be at least 6 characters"
   );
   expect(errorMsgforSixDigitPassword.props.children).toBeTruthy();
 });

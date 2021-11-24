@@ -1,34 +1,84 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { TextInput, Button, Title } from "react-native-paper";
+import { TextInput, Button, Title, Caption } from "react-native-paper";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-const SignupScreen = (props) => {
-  const [text, setText] = React.useState("");
+const schema = yup.object({
+  username: yup.string().required(),
+  password: yup.string().min(6).required(),
+});
+
+const SignupScreen = ({
+  onSubmit = (data) => console.log(data),
+  navigation,
+}) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+    resolver: yupResolver(schema),
+  });
 
   return (
     <View style={styles.container}>
       <Title>Signup Now!</Title>
       <View style={styles.formContainer}>
-        <TextInput
-          label="Username"
-          placeholder="Enter a username"
-          value={text}
-          onChangeText={(newText) => setText(newText)}
-          testID="username"
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              label="Username"
+              placeholder="Enter a username"
+              error={errors.username}
+              onBlur={onBlur}
+              value={value}
+              onChangeText={onChange}
+              testID="username"
+            />
+          )}
+          name="username"
         />
-        <TextInput
-          label="Password"
-          placeholder="Enter a password"
-          value={text}
-          onChangeText={(newText) => setText(newText)}
-          testID="password"
+        {errors.username && (
+          <Caption style={styles.errStyle}>{errors.username?.message}</Caption>
+        )}
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+            minLength: 6,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              label="Password"
+              error={errors.password}
+              placeholder="Enter a password"
+              onBlur={onBlur}
+              value={value}
+              onChangeText={onChange}
+              testID="password"
+            />
+          )}
+          name="password"
         />
+        {errors.password && (
+          <Caption style={styles.errStyle}>{errors.password?.message}</Caption>
+        )}
         <Button
           icon="login"
           mode="contained"
           style={styles.btnSpace}
           contentStyle={styles.btnStyle}
-          onPress={() => console.log("Pressed")}
+          onPress={handleSubmit(onSubmit)}
           testID="submit"
         >
           Signup
@@ -37,7 +87,7 @@ const SignupScreen = (props) => {
           mode="text"
           style={styles.btnSpace}
           contentStyle={styles.btnStyle}
-          onPress={() => props.navigation.navigate("Login")}
+          onPress={() => navigation.navigate("Login")}
           testID="navigateToLogin"
         >
           Already Registred? Login.
@@ -62,6 +112,9 @@ const styles = StyleSheet.create({
   },
   btnSpace: {
     marginVertical: 10,
+  },
+  errStyle: {
+    color: "red",
   },
 });
 

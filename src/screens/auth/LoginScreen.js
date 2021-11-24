@@ -2,6 +2,13 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { TextInput, Button, Title, Caption } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object({
+  username: yup.string().required(),
+  password: yup.string().min(6).required(),
+});
 
 const LoginScreen = ({
   onSubmit = (data) => console.log(data),
@@ -16,6 +23,7 @@ const LoginScreen = ({
       username: "",
       password: "",
     },
+    resolver: yupResolver(schema),
   });
 
   // const onSubmit = (data) => console.log(data)
@@ -43,7 +51,7 @@ const LoginScreen = ({
           name="username"
         />
         {errors.username && (
-          <Caption style={styles.errStyle}>This field is required</Caption>
+          <Caption style={styles.errStyle}>{errors.username?.message}</Caption>
         )}
 
         <Controller
@@ -67,11 +75,7 @@ const LoginScreen = ({
           name="password"
         />
         {errors.password && (
-          <Caption style={styles.errStyle}>
-            {errors.password.type === "minLength"
-              ? "require minimum character 6"
-              : "This field is required"}
-          </Caption>
+          <Caption style={styles.errStyle}>{errors.password?.message}</Caption>
         )}
         <Button
           icon="login"
