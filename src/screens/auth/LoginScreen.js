@@ -13,7 +13,10 @@ const schema = yup.object({
 const LoginScreen = ({
   onSubmit = (data) => console.log(data),
   navigation,
+  route,
 }) => {
+  const { signupStatus } = route.params;
+
   const {
     control,
     handleSubmit,
@@ -26,10 +29,11 @@ const LoginScreen = ({
     resolver: yupResolver(schema),
   });
 
-  // const onSubmit = (data) => console.log(data)
+  const onUserSubmit = (data) => console.log(data);
 
   return (
     <View style={styles.container}>
+      {signupStatus && <Caption>Signup Successful</Caption>}
       <Title>Login Now!</Title>
       <View style={styles.formContainer}>
         <Controller
@@ -82,7 +86,10 @@ const LoginScreen = ({
           mode="contained"
           style={styles.btnSpace}
           contentStyle={styles.btnStyle}
-          onPress={handleSubmit(onSubmit)}
+          onPress={() => {
+            handleSubmit(onUserSubmit);
+            handleSubmit(onSubmit);
+          }}
           testID="submit"
         >
           Login
