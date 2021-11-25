@@ -1,9 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { StyleSheet, View } from "react-native";
 import { TextInput, Button, Title, Caption } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+
+import { loginUserAction } from "../../store/actions/authActions";
 
 const schema = yup.object({
   username: yup.string().required(),
@@ -15,6 +18,7 @@ const LoginScreen = ({
   navigation,
   route,
 }) => {
+  const dispatch = useDispatch();
   const { signupStatus } = route.params;
 
   const {
@@ -30,7 +34,7 @@ const LoginScreen = ({
   });
 
   const onUserSubmit = (data) => {
-    console.log(data);
+    dispatch(loginUserAction(data));
     onSubmit(data);
   };
 

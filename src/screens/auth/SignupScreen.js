@@ -6,7 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { signupUser } from "../../store/actions/authActions";
+import { signupUserAction } from "../../store/actions/authActions";
 import { clearSignupError } from "../../store/slices/authSlice";
 
 const schema = yup.object({
@@ -35,7 +35,7 @@ const SignupScreen = ({
   });
 
   const onUserSubmit = (data) => {
-    dispatch(signupUser(data));
+    dispatch(signupUserAction(data));
     onSubmit(data);
     reset();
   };
