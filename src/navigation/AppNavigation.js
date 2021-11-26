@@ -37,7 +37,7 @@ const AppNavigation = () => {
       // You can return any component that you like here!
       return <Feather name={iconName} size={iconSize} color={color} />;
     },
-    tabBarActiveTintColor: "tomato",
+    tabBarActiveTintColor: "#6200EE",
     tabBarInactiveTintColor: "gray",
   });
 

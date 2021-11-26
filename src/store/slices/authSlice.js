@@ -17,7 +17,7 @@ const authSlice = createSlice({
     errorSigningUp: (state) => {
       state.signUpError = "User already registred!";
     },
-    clearSignupError: (state, action) => {
+    clearSignupError: (state) => {
       state.signUpError = null;
     },
     startLoading: (state) => {

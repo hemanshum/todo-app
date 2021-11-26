@@ -13,11 +13,7 @@ const schema = yup.object({
   password: yup.string().min(6).required(),
 });
 
-const LoginScreen = ({
-  onSubmit = (data) => console.log(data),
-  navigation,
-  route,
-}) => {
+const LoginScreen = ({ onSubmit = () => {}, navigation, route }) => {
   const dispatch = useDispatch();
   const { signupStatus } = route.params;
 

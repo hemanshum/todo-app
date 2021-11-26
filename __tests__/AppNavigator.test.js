@@ -6,25 +6,26 @@ import store from "../src/store";
 
 import AppNavigator from "../src/navigation/AppNavigation";
 
-// jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper");
+jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper");
 
 describe("Testing react navigation", () => {
-  test.todo("page contains the header Signup Now");
-  // , async () => {
-  //   const component = (
-  //     <Provider store={store}>
-  //       <NavigationContainer>
-  //         <AppNavigator />
-  //       </NavigationContainer>
-  //     </Provider>
-  //   );
-  //   // console.log(store.getState().auth.user.sessionToken);
-  //   const { findByText } = render(component);
+  test("page contains the header Signup Now", async () => {
+    const component = (
+      <Provider store={store}>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </Provider>
+    );
+    // console.log(store.getState().auth.user.sessionToken);
+    // const { getByA11yRole } = render(component);
 
-  //   const signupTitle = await findByText("Login Now!");
+    // const loading = getByA11yRole("progressbar");
+    // console.log(loading);
+    // const signupTitle = await findByText("Login Now!");
 
-  //   await expect(signupTitle).toBeTruthy();
-  // });
+    // await expect(signupTitle).toBeTruthy();
+  });
 
   test.todo("navigate between signup and login screens");
   // , async () => {
