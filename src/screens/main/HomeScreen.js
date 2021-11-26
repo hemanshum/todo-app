@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet, View, FlatList } from "react-native";
 import { ActivityIndicator, Caption, TextInput } from "react-native-paper";
 
-import { fetchTodos, addTodo } from "../../store/actions/todoActions";
+import {
+  todoDone,
+  fetchTodos,
+  addTodo,
+  deleteTodo,
+} from "../../store/actions/todoActions";
 
 import TodoCardComponent from "../../components/TodoCardComponent";
 
@@ -16,29 +21,39 @@ const HomeScreen = () => {
     dispatch(fetchTodos());
   }, [dispatch]);
 
-  const renderedItems = ({ item }) => <TodoCardComponent item={item} />;
+  const renderedItems = ({ item }) => (
+    <TodoCardComponent
+      todoDone={() =>
+        dispatch(todoDone({ todoId: item.objectId, done: item.done }))
+      }
+      deleteTodo={() => dispatch(deleteTodo(item.objectId))}
+      item={item}
+    />
+  );
   return (
     <View style={styles.container}>
-      <TextInput
-        label="Enter your task"
-        style={styles.textInputStyle}
-        value={inputText}
-        onChangeText={setInputText}
-        right={
-          <TextInput.Icon
-            name="checkbox-marked-circle-outline"
-            color="#1DEAB6"
-            onPress={() => {
-              dispatch(addTodo(inputText));
-              setInputText("");
-            }}
-          />
-        }
-      />
+      <View style={styles.textInputContainer}>
+        <TextInput
+          style={styles.textInputStyle}
+          label="Enter your task"
+          value={inputText}
+          onChangeText={setInputText}
+          right={
+            <TextInput.Icon
+              name="checkbox-marked-circle-outline"
+              color="#1DEAB6"
+              onPress={() => {
+                dispatch(addTodo(inputText));
+                setInputText("");
+              }}
+            />
+          }
+        />
+      </View>
       {isLoading && (
         <View style={styles.activityStyle}>
           <ActivityIndicator animating={true} />
-          <Caption>adding new todo...</Caption>
+          <Caption>loading...</Caption>
         </View>
       )}
       <FlatList
@@ -50,15 +65,19 @@ const HomeScreen = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  textInputContainer: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 10,
   },
   textInputStyle: {
     backgroundColor: "#fff",
   },
   flatListStyle: {
-    marginVertical: 10,
     paddingBottom: 10,
   },
   activityStyle: {

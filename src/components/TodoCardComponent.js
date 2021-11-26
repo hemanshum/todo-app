@@ -2,22 +2,18 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Checkbox } from "react-native-paper";
 
-const TodoCardComponent = ({ item }) => {
+const TodoCardComponent = ({ item, todoDone, deleteTodo }) => {
   return (
     <View style={styles.todoCard}>
       <View style={styles.todoContent}>
         <Checkbox.Item
           label={item.todo}
           status={item.done ? "checked" : "unchecked"}
+          onPress={todoDone}
         />
       </View>
       <View style={styles.deleteBtnContainer}>
-        <Button
-          icon="delete"
-          mode="text"
-          color="tomato"
-          onPress={() => console.log("Pressed")}
-        />
+        <Button icon="delete" mode="text" color="tomato" onPress={deleteTodo} />
       </View>
     </View>
   );
