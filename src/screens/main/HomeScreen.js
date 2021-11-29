@@ -46,8 +46,10 @@ const HomeScreen = () => {
                 dispatch(addTodo(inputText));
                 setInputText("");
               }}
+              testID="submitYourTask"
             />
           }
+          testID="enterYourTask"
         />
       </View>
       {isLoading && (
